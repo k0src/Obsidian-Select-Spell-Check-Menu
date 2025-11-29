@@ -1,6 +1,8 @@
 # Select Spell Check
 
-An Obsidian plugin for checking spelling and accepting suggestions using keyboard shortcuts, without needing to use the mouse.
+An Obsidian plugin for checking spelling and accepting suggestions using keyboard shortcuts, without needing to move your mouse.
+
+![screenshot](/assets/screenshot.png)
 
 ## Features
 
@@ -13,7 +15,7 @@ An Obsidian plugin for checking spelling and accepting suggestions using keyboar
 ### Manual Installation
 
 1. Download the latest release from the [Releases page](https://github.com/yourusername/select-spell-check/releases)
-2. Extract the zip file to your vault's plugins folder: `VaultFolder/.obsidian/plugins/select-spell-check/`
+2. Extract the zip file to your vault's plugins folder
 3. The folder should contain:
     - `main.js`
     - `manifest.json`
