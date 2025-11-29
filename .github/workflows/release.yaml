@@ -24,9 +24,11 @@ jobs:
                   npm install
                   npm run build
 
+            - name: Authenticate gh
+              run: |
+                  echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
             - name: Create release
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   tag="${GITHUB_REF#refs/tags/}"
 
@@ -36,4 +38,5 @@ jobs:
                     main.js \
                     manifest.json \
                     styles.css \
-                    dic/en
+                    dic/en/index.aff \
+                    dic/en/index.dic
