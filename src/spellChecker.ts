@@ -83,6 +83,48 @@ export class SpellChecker {
 		}
 	}
 
+	acceptAllTopSuggestions(editor: Editor, view: MarkdownView) {
+		if (!this.plugin.spell) {
+			console.error("Spell checker not initialized");
+			return;
+		}
+
+		const cursor = editor.getCursor();
+		const currentLine = cursor.line;
+		const lineText = editor.getLine(currentLine);
+
+		const misspelledWords = this.findMisspelledWordsInLine(
+			lineText,
+			currentLine
+		);
+
+		if (misspelledWords.length === 0) {
+			return;
+		}
+
+		const savedCursor = editor.getCursor();
+		let totalLengthDiff = 0;
+
+		for (let i = misspelledWords.length - 1; i >= 0; i--) {
+			const word = misspelledWords[i];
+			const suggestions = this.getSpellingSuggestions(word.word);
+
+			if (suggestions.length > 0) {
+				const lengthDiff = suggestions[0].length - word.word.length;
+				editor.replaceRange(suggestions[0], word.from, word.to);
+
+				if (savedCursor.ch > word.from.ch) {
+					totalLengthDiff += lengthDiff;
+				}
+			}
+		}
+
+		editor.setCursor({
+			line: savedCursor.line,
+			ch: savedCursor.ch + totalLengthDiff,
+		});
+	}
+
 	openSpellingMenu(editor: Editor, view: MarkdownView) {
 		if (!this.plugin.spell) {
 			console.error("Spell checker not initialized");

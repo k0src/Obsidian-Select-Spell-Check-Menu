@@ -45,6 +45,19 @@ export default class SelectSpellCheckPlugin extends Plugin {
 		});
 
 		this.addCommand({
+			id: "accept-all-top-suggestions",
+			name: "Accept all top spelling suggestions on current line",
+			editorCheckCallback: (
+				checking: boolean,
+				editor: Editor,
+				view: MarkdownView
+			) => {
+				if (checking) return true;
+				this.spellChecker.acceptAllTopSuggestions(editor, view);
+			},
+		});
+
+		this.addCommand({
 			id: "open-spelling-menu",
 			name: "Open spelling menu",
 			editorCheckCallback: (
