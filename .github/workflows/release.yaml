@@ -23,6 +23,14 @@ jobs:
                   npm install
                   npm run build
 
+            - name: Package release files
+              run: |
+                  mkdir release-files
+                  cp main.js manifest.json styles.css release-files/
+                  cp -r dic release-files/
+                  cd release-files
+                  zip -r ../quick-spell-check.zip .
+
             - name: Create release
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -32,4 +40,4 @@ jobs:
                   gh release create "$tag" \
                     --title="$tag" \
                     --draft \
-                    main.js manifest.json styles.css dic/en/index.aff dic/en/index.dic
+                    quick-spell-check.zip main.js manifest.json styles.css
