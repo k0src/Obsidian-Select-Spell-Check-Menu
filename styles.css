@@ -13,3 +13,59 @@
 	display: flex;
 	align-items: center;
 }
+
+.dictionary-download-container {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-4-2);
+}
+
+.dictionary-download-list {
+	max-height: 200px;
+	overflow-y: auto;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-s);
+	padding: var(--size-4-2);
+}
+
+.dictionary-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: var(--size-2-1) 0;
+}
+
+.dictionary-item-text {
+	font-size: var(--font-smaller);
+}
+
+.dictionary-item-installed {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: var(--size-2-1);
+	padding: var(--size-2-1) 0;
+}
+
+.dictionary-item-installed-text {
+	color: var(--text-muted);
+	font-size: var(--font-smallest);
+}
+
+.dictionary-item-delete-btn {
+	opacity: 0.6;
+}
+
+.dictionary-item-delete-btn:hover:not(:disabled) {
+	opacity: 1;
+}
+
+.dictionary-item-delete-btn.delete-disabled {
+	opacity: 0.3;
+	cursor: not-allowed;
+}
+
+.dictionary-item-download-btn {
+	font-size: var(--font-smallest);
+	min-width: 80px;
+}

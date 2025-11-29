@@ -6,14 +6,17 @@ import {
 	SelectSpellCheckSettingTab,
 } from "./src/settings";
 import { SpellChecker } from "./src/spellChecker";
+import { DictionaryManager } from "./src/dictionaryManager";
 
 export default class SelectSpellCheckPlugin extends Plugin {
 	settings: SelectSpellCheckSettings;
 	spell: any = null;
+	dictionaryManager: DictionaryManager;
 	private spellChecker: SpellChecker;
 
 	async onload() {
 		await this.loadSettings();
+		this.dictionaryManager = new DictionaryManager(this);
 		await this.loadDictionary();
 
 		this.spellChecker = new SpellChecker(this);
@@ -67,18 +70,18 @@ export default class SelectSpellCheckPlugin extends Plugin {
 
 	async loadDictionary() {
 		try {
+			const { affPath, dicPath } =
+				this.dictionaryManager.getDictionaryPath(
+					this.settings.currentDictionary
+				);
 			const adapter = this.app.vault.adapter;
-			const pluginDir = this.manifest.dir + "/";
-
-			const affPath = pluginDir + "index.aff";
-			const dicPath = pluginDir + "index.dic";
 
 			if (
 				!(await adapter.exists(affPath)) ||
 				!(await adapter.exists(dicPath))
 			) {
 				new Notice(
-					"Dictionary files not found. Please add index.aff and index.dic to the plugin folder."
+					`Dictionary "${this.settings.currentDictionary}" not found.`
 				);
 				return;
 			}
