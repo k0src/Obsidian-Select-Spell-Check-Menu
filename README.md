@@ -6,8 +6,6 @@ An Obsidian plugin for checking spelling and accepting suggestions using keyboar
   <img src="/assets/screenshot.png" alt="screenshot" width="350" />
 </p>
 
-Realistically, it's not as accurate as the native Obsidian spell-check, but it's much faster, and works ~90% of the time.
-
 ## Features
 
 -   **Accept top suggestion**: Automatically replaces the nearest misspelled word on the current line with the top spelling suggestion
@@ -39,6 +37,8 @@ _Coming soon_
 3. Assign hotkeys to:
     - "Accept top spelling suggestion"
     - "Open spelling menu"
+
+Realistically, it's not as accurate as the native Obsidian spell-check, but it's much faster, and works ~90% of the time.
 
 ## Credits
 
