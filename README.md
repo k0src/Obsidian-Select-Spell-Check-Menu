@@ -2,7 +2,7 @@
 
 An Obsidian plugin for checking spelling and accepting suggestions using keyboard shortcuts, without needing to move your mouse.
 
-![screenshot](/assets/screenshot.png)
+<img src="/assets/screenshot.png" alt="screenshot" width="400" />
 
 ## Features
 
