@@ -1,0 +1,15 @@
+.spell-check-suggestion-number {
+	font-family: var(--font-monospace);
+	font-size: var(--font-smaller);
+	color: var(--text-faint);
+	opacity: 0.6;
+	margin-right: 0.75em;
+	display: inline-block;
+	min-width: 1.2em;
+	text-align: right;
+}
+
+.menu .menu-item.spell-check-item {
+	display: flex;
+	align-items: center;
+}

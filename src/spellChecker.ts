@@ -260,11 +260,31 @@ export class SpellChecker {
 		};
 
 		const topSuggestions = suggestions.slice(0, 10);
-		topSuggestions.forEach((suggestion) => {
+		topSuggestions.forEach((suggestion, index) => {
 			menu.addItem((item) => {
-				item.setTitle(suggestion).onClick(() => {
+				const number = index === 9 ? 0 : index + 1;
+
+				item.onClick(() => {
 					applySuggestion(suggestion);
 				});
+
+				const itemEl = (item as any).dom as HTMLElement;
+				if (itemEl) {
+					itemEl.addClass("spell-check-item");
+
+					itemEl.empty();
+
+					const titleContainer = itemEl.createDiv("menu-item-title");
+					if (this.plugin.settings.enableNumberKeySelection) {
+						const numberSpan = titleContainer.createSpan(
+							"spell-check-suggestion-number"
+						);
+						numberSpan.textContent = `${number}`;
+					}
+
+					const textSpan = titleContainer.createSpan();
+					textSpan.textContent = suggestion;
+				}
 			});
 		});
 
