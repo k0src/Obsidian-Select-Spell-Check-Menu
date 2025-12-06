@@ -22,7 +22,7 @@ export class SelectSpellCheckSettingTab extends PluginSettingTab {
 		this.plugin = plugin;
 	}
 
-	async display(): Promise<void> {
+	display(): void {
 		const { containerEl } = this;
 
 		containerEl.empty();
@@ -39,21 +39,24 @@ export class SelectSpellCheckSettingTab extends PluginSettingTab {
 					})
 			);
 
-		new Setting(containerEl)
+		const customWordsSetting = new Setting(containerEl)
 			.setName("Custom words")
-			.setDesc("Add custom words to your dictionary (one per line)")
-			.addTextArea((text) =>
-				text
-					.setPlaceholder("Enter words, one per line")
-					.setValue(this.plugin.settings.customDictionary)
-					.onChange(async (value) => {
-						this.plugin.settings.customDictionary = value;
-						await this.plugin.saveSettings();
-						await this.plugin.loadDictionary();
-					})
-			);
+			.setDesc("Add custom words to your dictionary (one per line)");
 
-		await this.addDictionarySelection(containerEl);
+		let textAreaComponent: import("obsidian").TextAreaComponent;
+		customWordsSetting.addTextArea((text) => {
+			text.setPlaceholder("Enter words, one per line")
+				.setValue(this.plugin.settings.customDictionary)
+				.onChange(async (value) => {
+					this.plugin.settings.customDictionary = value;
+					await this.plugin.saveSettings();
+					await this.plugin.loadDictionary();
+				});
+			text.inputEl.addClass("quick-spellcheck-textarea");
+			textAreaComponent = text;
+		});
+
+		this.addDictionarySelection(containerEl);
 	}
 
 	private async addDictionarySelection(
@@ -65,15 +68,6 @@ export class SelectSpellCheckSettingTab extends PluginSettingTab {
 		const setting = new Setting(containerEl)
 			.setName("Spell check language")
 			.setDesc("");
-
-		const descEl = setting.descEl;
-		descEl.empty();
-		descEl.createSpan({ text: "Dictionaries are downloaded from " });
-		descEl.createEl("a", {
-			text: "wooorm/dictionaries",
-			href: "https://github.com/wooorm/dictionaries",
-		});
-		descEl.createSpan({ text: " on GitHub." });
 
 		setting.addDropdown((dropdown) => {
 			for (const dict of VALID_DICTIONARIES) {
@@ -153,7 +147,7 @@ export class SelectSpellCheckSettingTab extends PluginSettingTab {
 								await this.plugin.loadDictionary();
 							}
 						}
-						this.display();
+						void this.display();
 					} else {
 						deleteBtn.disabled = false;
 					}
@@ -174,7 +168,7 @@ export class SelectSpellCheckSettingTab extends PluginSettingTab {
 						);
 
 					if (success) {
-						this.display();
+						void this.display();
 					} else {
 						downloadBtn.disabled = false;
 						downloadBtn.textContent = "Download";

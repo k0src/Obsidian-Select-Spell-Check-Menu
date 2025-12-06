@@ -1,4 +1,4 @@
-import { Notice } from "obsidian";
+import { Notice, requestUrl } from "obsidian";
 import type SelectSpellCheckPlugin from "../main";
 
 export const DICTIONARY_REPO_BASE =
@@ -144,27 +144,27 @@ export class DictionaryManager {
 			await adapter.mkdir(dirPath);
 
 			const affUrl = `${DICTIONARY_REPO_BASE}/${code}/index.aff`;
-			const affResponse = await fetch(affUrl);
+			const affResponse = await requestUrl(affUrl);
 
-			if (!affResponse.ok) {
+			if (affResponse.status !== 200) {
 				throw new Error(
 					`Failed to download .aff file: ${affResponse.status}`
 				);
 			}
 
-			const affData = await affResponse.text();
+			const affData = affResponse.text;
 			await adapter.write(affPath, affData);
 
 			const dicUrl = `${DICTIONARY_REPO_BASE}/${code}/index.dic`;
-			const dicResponse = await fetch(dicUrl);
+			const dicResponse = await requestUrl(dicUrl);
 
-			if (!dicResponse.ok) {
+			if (dicResponse.status !== 200) {
 				throw new Error(
 					`Failed to download .dic file: ${dicResponse.status}`
 				);
 			}
 
-			const dicData = await dicResponse.text();
+			const dicData = dicResponse.text;
 			await adapter.write(dicPath, dicData);
 
 			new Notice(`Downloaded ${name} dictionary`);

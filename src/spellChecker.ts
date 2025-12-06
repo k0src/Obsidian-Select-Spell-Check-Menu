@@ -196,7 +196,7 @@ export class SpellChecker {
 
 			if (word.length < 2) continue;
 
-			if (!this.plugin.spell.correct(word)) {
+			if (!this.plugin.spell?.correct(word)) {
 				misspelled.push({
 					word: word,
 					from: { line: lineNumber, ch: match.index },
@@ -310,12 +310,12 @@ export class SpellChecker {
 					applySuggestion(suggestion);
 				});
 
-				const itemEl = (item as any).dom as HTMLElement;
+				// @ts-expect-error
+				const itemEl = item.dom as HTMLElement;
 				if (itemEl) {
 					itemEl.addClass("spell-check-item");
 
 					itemEl.empty();
-
 					const titleContainer = itemEl.createDiv("menu-item-title");
 					if (this.plugin.settings.enableNumberKeySelection) {
 						const numberSpan = titleContainer.createSpan(
@@ -390,7 +390,19 @@ export class SpellChecker {
 			this.currentMenu = null;
 		});
 
-		const cm = (editor as any).cm;
+		const cm = (
+			editor as {
+				cm?: {
+					coordsChar: (coords: {
+						left: number;
+						top: number;
+					}) => unknown;
+					coordsAtPos: (
+						offset: number
+					) => { left: number; top: number; bottom: number } | null;
+				};
+			}
+		).cm;
 		if (cm) {
 			const wordMiddlePos = {
 				line: misspelledWord.from.line,

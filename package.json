@@ -1,6 +1,6 @@
 {
 	"name": "quick-spell-check",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "Open and auto-select spell check suggestions.",
 	"main": "main.js",
 	"scripts": {

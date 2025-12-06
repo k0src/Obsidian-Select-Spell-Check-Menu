@@ -10,7 +10,7 @@ import { DictionaryManager } from "./src/dictionaryManager";
 
 export default class SelectSpellCheckPlugin extends Plugin {
 	settings: SelectSpellCheckSettings;
-	spell: any = null;
+	spell: ReturnType<typeof nspell> | null = null;
 	dictionaryManager: DictionaryManager;
 	private spellChecker: SpellChecker;
 
@@ -21,7 +21,7 @@ export default class SelectSpellCheckPlugin extends Plugin {
 		const enDictionaryInstalled =
 			await this.dictionaryManager.isDictionaryInstalled("en");
 		if (!enDictionaryInstalled) {
-			new Notice("Quick Spell Check: Downloading English dictionary...");
+			new Notice("Downloading English dictionary...");
 			await this.dictionaryManager.downloadDictionary("English", "en");
 		}
 
@@ -119,7 +119,7 @@ export default class SelectSpellCheckPlugin extends Plugin {
 					.filter((word) => word.length > 0);
 
 				customWords.forEach((word) => {
-					this.spell.add(word);
+					this.spell?.add(word);
 				});
 			}
 		} catch (error) {
