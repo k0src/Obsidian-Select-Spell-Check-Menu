@@ -43,7 +43,6 @@ export class SelectSpellCheckSettingTab extends PluginSettingTab {
 			.setName("Custom words")
 			.setDesc("Add custom words to your dictionary (one per line)");
 
-		let textAreaComponent: import("obsidian").TextAreaComponent;
 		customWordsSetting.addTextArea((text) => {
 			text.setPlaceholder("Enter words, one per line")
 				.setValue(this.plugin.settings.customDictionary)
@@ -53,10 +52,9 @@ export class SelectSpellCheckSettingTab extends PluginSettingTab {
 					await this.plugin.loadDictionary();
 				});
 			text.inputEl.addClass("quick-spellcheck-textarea");
-			textAreaComponent = text;
 		});
 
-		this.addDictionarySelection(containerEl);
+		void this.addDictionarySelection(containerEl);
 	}
 
 	private async addDictionarySelection(

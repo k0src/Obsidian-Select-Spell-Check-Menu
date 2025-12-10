@@ -21,7 +21,7 @@ export default class SelectSpellCheckPlugin extends Plugin {
 		const enDictionaryInstalled =
 			await this.dictionaryManager.isDictionaryInstalled("en");
 		if (!enDictionaryInstalled) {
-			new Notice("Downloading English dictionary...");
+			// new Notice("Downloading English dictionary...");
 			await this.dictionaryManager.downloadDictionary("English", "en");
 		}
 
